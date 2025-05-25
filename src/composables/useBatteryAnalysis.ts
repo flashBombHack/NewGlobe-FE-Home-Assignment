@@ -38,6 +38,7 @@ export function useBatteryAnalysis() {
 
 function analyzeBatteryData(data: BatteryDataPoint[]): SchoolBatteryReport[] {
   const groupedByDevice = new Map<string, BatteryDataPoint[]>();
+  const DRAIN_THRESHOLD = parseFloat(import.meta.env.VITE_DRAIN_THRESHOLD);
 
   data.forEach((point) => {
     if (!groupedByDevice.has(point.serialNumber)) {
@@ -86,7 +87,11 @@ function analyzeBatteryData(data: BatteryDataPoint[]): SchoolBatteryReport[] {
     // so here I am defining the status based on the average daily drain, more than 30% is considered unhealthy
 
     const status: 'Healthy' | 'Replace' | 'Unknown' =
-      avgDailyDrain === undefined ? 'Unknown' : avgDailyDrain > 0.3 ? 'Replace' : 'Healthy';
+      avgDailyDrain === undefined
+        ? 'Unknown'
+        : avgDailyDrain > DRAIN_THRESHOLD
+          ? 'Replace'
+          : 'Healthy';
 
     const device: DeviceAnalysis = {
       serialNumber,
