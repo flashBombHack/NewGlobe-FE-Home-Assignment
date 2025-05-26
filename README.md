@@ -63,6 +63,13 @@ To meet the time limit while maintaining code quality and clarity, the following
 4. **Authentication / Role-based Access**  
    _Next Step:_ Wrap frontend with basic auth or connect to a backend auth service for multi-user support.
 
+## Recommended Node Version
+
+```bash
+# Node Version
+v20.9.+
+```
+
 ## Running the Project
 
 ```bash
